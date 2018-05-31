@@ -12,12 +12,12 @@ public class XEventBus extends EventBus {
     }
 
     public static EventBus getDefault() {
-        if (defaultInstance instanceof XEventBus) {
-            return defaultInstance;
+        if (EventBus.defaultInstance instanceof XEventBus) {
+            return EventBus.defaultInstance;
         }
         final XEventBus xEventBus = new XEventBus();
         EventBus.getDefault();
-        return (defaultInstance = xEventBus);
+        return (EventBus.defaultInstance = xEventBus);
     }
 
     @Override
