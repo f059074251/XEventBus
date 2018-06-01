@@ -6,11 +6,12 @@ import android.os.Bundle;
 
 import com.tiger.xeventbus.R;
 
+import org.greenrobot.eventbus.IXEventSubsciber;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.greenrobot.eventbus.XEventBus;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements IXEventSubsciber{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +22,12 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                XEventBus.getDefault().post(new Test(MainActivity.this));
+                XEventBus.getDefault().post(new Test(new IXEventSubsciber() {
+                    @Override
+                    public Object getId() {
+                        return MainActivity.this;
+                    }
+                }));
             }
         }, 10000);
     }
@@ -34,5 +40,11 @@ public class MainActivity extends AppCompatActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void NoticeRefresh(Test refreshEvent) {
          System.out.println("#test");
+    }
+
+    //接收者需要实现同样的接口
+    @Override
+    public Object getId() {
+        return this;
     }
 }

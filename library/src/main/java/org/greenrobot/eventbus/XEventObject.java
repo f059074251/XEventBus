@@ -12,4 +12,9 @@ public class XEventObject {
     public XEventObject(Object subscriber) {
         this.subscriber = subscriber;
     }
+
+    public XEventObject(IXEventSubsciber subscriber) {
+        this.subscriber = subscriber;
+    }
+
 }
